@@ -6,6 +6,7 @@ The Hawaii Climate API is a Flask application that serves as an API for accessin
 
 
 Contents inside the SurfsUp folder:
+
 • app.py: This file contains the Flask application code, including the API routes and database connections.
 
 
