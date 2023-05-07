@@ -1,8 +1,12 @@
 # sqlalchemy-challenge
 
-#Hawaii Climate API
+# Hawaii Climate API
 
-This project required making a Flask application that serves as an API for accessing climate data from a SQLite database. The API provides various routes to retrieve precipitation data, station information, temperature observations, and temperature statistics within specified date ranges.
+The Hawaii Climate API is a Flask application that serves as an API for accessing climate data from a SQLite database. It provides various routes to retrieve precipitation data, station information, temperature observations, and temperature statistics within specified date ranges.
 
-Inside the SurfsUp folder contains a resources folder holding the CSV files and SQLite files used. For the Jupyter Notebook Database Connection, Precipitation Analysis, and the Station Analysis, the code can be located in the sqlalchemy.ipynb. The app.py file contains the code for the rest of the analysis.
 
+Contents inside the SurfsUp folder:
+
+• app.py: This file contains the Flask application code, including the API routes and database connections.
+• Resources (folder): This holds the CSV and SQLite files used for the analysis.
+• sqlalchemy.ipynb: This Jupyter Notebook contains code for the database connection, precipitation analysis, and station     analysis. 
