@@ -4,7 +4,7 @@ Created on Sat May  6 18:10:50 2023
 
 @author: joshu
 """
-#Import Dependencies
+# Import Dependencies
 from flask import Flask, jsonify
 import datetime as dt
 import numpy as np
@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session
 #################################################
 
 # Create an engine to connect to the SQLite database file
-engine = create_engine("sqlite:///sqlalchemy-challenge/SurfsUp/Resources/hawaii.sqlite")
+engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 
 # Reflect the existing database into a new model
 Base = automap_base()
@@ -159,7 +159,7 @@ def temperature_start_end(start, end):
 
 # Run the Flask application
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
     
 
 
