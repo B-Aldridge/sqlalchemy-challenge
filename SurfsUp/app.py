@@ -45,7 +45,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     """List all available api routes."""
-    # Provide information about the available routes
+    # Provide info about the available routes
     return (
         f"Welcome to the Hawaii Climate API!<br/><br/>"
         f"Available Routes:<br/><br/>"
@@ -79,7 +79,7 @@ def precipitation():
     # Close the session
     session.close()
     
-    # Return the JSON representation of the precipitation data
+    # Return the JSON output of the precipitation data
     return jsonify(precipitation_data)
 
 @app.route("/api/v1.0/stations")
@@ -88,7 +88,7 @@ def stations():
     # Query the list of stations
     results = session.query(Station.station).all()
     
-    # Flatten the query results and convert them to a list
+    # convert to a normal list
     station_list = list(np.ravel(results))
     
     # Return the JSON representation of the station list
@@ -121,7 +121,7 @@ def temperature_start(start):
     # Convert the start date string to a datetime object
     start_date = dt.datetime.strptime(start, '%Y-%m-%d')
 
-    # Query the minimum, average, and maximum temperatures for dates greater than or equal to the start date
+    # Query the min, avg, and max temperatures for dates greater than or equal to the start date
     results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start_date).all()
 
     # Create a dictionary with the start date and temperature statistics
@@ -142,7 +142,7 @@ def temperature_start_end(start, end):
     start_date = dt.datetime.strptime(start, '%Y-%m-%d')
     end_date = dt.datetime.strptime(end, '%Y-%m-%d')
 
-    # Query the minimum, average, and maximum temperatures for dates within the specified range
+    # Query the min, avg, and max temperatures for dates within the specified range
     results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
 
     # Create a dictionary with the start date, end date, and temperature statistics
