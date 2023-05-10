@@ -56,14 +56,14 @@ def home():
         f"/api/v1.0/tobs<br/>"
         f"- Retrieve the last 12 months of temperature observations for the most active station<br/><br/>"
         f"/api/v1.0/&lt;start&gt;<br/>"
-        f"- Retrieve the minimum, average, and maximum temperatures from a specified start date (format: YYYY-MM-DD)<br/><br/>"
+        f"- Retrieve the min, avg, and max temperatures from a specified start date (format: YYYY-MM-DD)<br/><br/>"
         f"/api/v1.0/&lt;start&gt;/&lt;end&gt;<br/>"
-        f"- Retrieve the minimum, average, and maximum temperatures within a specified date range (format: YYYY-MM-DD/YYYY-MM-DD)"
+        f"- Retrieve the min, avg, and max temperatures within a specified date range (format: YYYY-MM-DD/YYYY-MM-DD)"
     )
 
 @app.route("/api/v1.0/precipitation")
 def precipitation():
-    """Return the last 12 months of precipitation data."""
+    """Returns the last 12 months of precipitation data."""
     # Calculate the last date in the dataset
     last_date = session.query(Measurement.date).order_by(Measurement.date.desc()).first().date
     
@@ -75,7 +75,7 @@ def precipitation():
     
     # Convert the query results to a dictionary using date as the key and prcp as the value
     precipitation_data = {date: prcp for date, prcp in results}
-    
+
     # Close the session
     session.close()
     
@@ -90,6 +90,9 @@ def stations():
     
     # convert to a normal list
     station_list = list(np.ravel(results))
+
+    # Close the session
+    session.close()
     
     # Return the JSON representation of the station list
     return jsonify(station_list)
@@ -103,7 +106,7 @@ def tobs():
     # Calculate the date one year ago from the last date
     one_year_ago = dt.datetime.strptime(last_date, '%Y-%m-%d') - dt.timedelta(days=365)
 
-    # Query the most active station
+    # Retrieving the most active station
     most_active_station = session.query(Measurement.station).group_by(Measurement.station).order_by(func.count().desc()).first().station
 
     # Query the date and temperature observations for the last 12 months for the most active station
@@ -112,12 +115,15 @@ def tobs():
     # Create a list of dictionaries containing date and temperature observations
     temperature_data = [{"date": date, "tobs": tobs} for date, tobs in results]
 
-    # Return the JSON representation of the temperature data
+    # Close the session
+    session.close()
+
+    # Return the JSON representation of the temperature data for the last year
     return jsonify(temperature_data)
 
 @app.route("/api/v1.0/<start>")
 def temperature_start(start):
-    """Return the minimum, average, and maximum temperatures from a specified start date."""
+    """Return the min, avg, and max temperatures from a specified start date."""
     # Convert the start date string to a datetime object
     start_date = dt.datetime.strptime(start, '%Y-%m-%d')
 
@@ -132,12 +138,15 @@ def temperature_start(start):
         "TMAX": results[0][2]
     }
 
+    # Close the session
+    session.close()
+
     # Return the JSON representation of the temperature statistics
     return jsonify(temperature_stats)
 
 @app.route("/api/v1.0/<start>/<end>")
 def temperature_start_end(start, end):
-    """Return the minimum, average, and maximum temperatures within a specified date range."""
+    """Return the min, avg, and max temperatures within a specified date range."""
     # Convert the start and end date strings to datetime objects
     start_date = dt.datetime.strptime(start, '%Y-%m-%d')
     end_date = dt.datetime.strptime(end, '%Y-%m-%d')
@@ -153,6 +162,9 @@ def temperature_start_end(start, end):
         "TAVG": results[0][1],
         "TMAX": results[0][2]
     }
+
+    # Close the session
+    session.close()
 
     # Return the JSON representation of the temperature statistics
     return jsonify(temperature_stats)
