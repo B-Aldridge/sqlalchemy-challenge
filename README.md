@@ -4,6 +4,8 @@
 
 The Hawaii Climate API is a Flask application that serves as an API for accessing climate data from a SQLite database. It provides various routes to retrieve precipitation data, station information, temperature observations, and temperature statistics within specified date ranges.
 
+![API](SurfsUp/Hawaii%20Climate%20API.png)
+
 
 Contents inside the SurfsUp folder:
 
